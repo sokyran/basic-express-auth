@@ -1,0 +1,22 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "db": "json-server --watch db.json --port 3001",
+    "dev": "npm run start & npm run db"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "json-server": "^0.17.0",
+    "nodemon": "^2.0.14"
+  }
+}
