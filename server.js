@@ -1,8 +1,10 @@
-const express = require('express')
-const cors = require('cors')
 const fs = require('fs')
+const cors = require('cors')
+const express = require('express')
 const axios = require('axios').default
 const caesarCypher = require('./caesar')
+
+const svgCaptcha = require('svg-captcha');
 
 const app = express()
 const port = 3000
@@ -39,6 +41,11 @@ axios.get(`${dbURL}/users`).then(({ data }) => {
   db = data
 })
 
+app.get('/captcha', function (req, res) {
+	let captcha = svgCaptcha.create();
+	res.status(200).send({ svg: captcha.data, text: captcha.text });
+});
+
 app.post('/login', async (req, res) => {
   let { username, password } = req.body;
 
@@ -57,10 +64,10 @@ app.post('/login', async (req, res) => {
       }
       res.send(data)
     } else {
-      res.send({ status: 401 });
+      res.status(401).send({ status: 401 });
     }
   } else {
-    res.send({ status: 401 });
+    res.status(401).send({ status: 401 });
   }
 })
 

@@ -17,6 +17,16 @@ html, body {
   margin: 0;
 }
 
+.svg-container {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e9e9ed;
+  background:rgb(162, 255, 85);
+  border-radius: 8px;
+}
+
 form {
   display: flex;
   flex-direction: column;

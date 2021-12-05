@@ -7,14 +7,41 @@ const userPanel = document.querySelector('.user-panel');
 const welcomeUser = document.querySelector('.welcome-user');
 const userList = document.querySelector('.user-list');
 const nothingText = document.querySelector('.nothing-text');
+const svgContainer = document.querySelector('.svg-container');
+const captchaInput = document.querySelector('.captcha-input');
+
+const url = 'http://127.0.0.1:3000'
+
+let captchaText = ''
+
+const genCaptcha = () => {
+  fetch(url + '/captcha', {
+    method: 'GET',
+  }).then((res) => {
+    return res.json()
+  }).then((data) => {
+    svgContainer.innerHTML += data.svg
+    captchaText = data.text
+  })
+}
+
+genCaptcha()
 
 buttonInput.onclick = function()  {
   if (passInput.value.length == 0) {
     return;
   }
-  const url = 'http://127.0.0.1:3000/login'
+  if (captchaInput.value !== captchaText) {
+    resultOutput.classList.add('error');
+    resultOutput.classList.remove('d-none');
+    resultOutput.innerHTML = 'Wrong captcha!';
+    svgContainer.innerHTML = '';
+    passInput.value = '';
+    genCaptcha()
+    return;
+  }
   const data = {username: nameInput.value, password: passInput.value};
-  fetch(url, {
+  fetch(url + '/login', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
